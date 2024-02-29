@@ -8,9 +8,7 @@ const config = {
   physics: {
     //Arcade physics plugin, manages physics simulation
     default: "arcade",
-    arcade: {
-      gravity: { y: 400 },
-    },
+    arcade: {},
   },
   scene: {
     preload,
@@ -23,12 +21,14 @@ const config = {
 function preload() {
   this.load.image("sky", "assets/sky.png");
   this.load.image("bird", "assets/bird.png");
+  this.load.image("pipe", "assets/pipe.png");
 }
 
 let VELOCITY = 200;
 const flapVelocity = 300;
 const initialBirdPosition = { x: config.width * 0.1, y: config.height / 2 };
 let bird = null;
+let pipe = null;
 
 function create() {
   //x,y,key of the image
@@ -36,6 +36,10 @@ function create() {
   bird = this.physics.add
     .sprite(initialBirdPosition.x, initialBirdPosition.y, "bird")
     .setOrigin(0);
+  bird.body.gravity.y = 400;
+
+  pipe = this.physics.add.sprite(400, -300, "pipe").setOrigin(0);
+  pipe = this.physics.add.sprite(400, 300, "pipe").setOrigin(0);
 
   this.input.on("pointerdown", flap);
 
